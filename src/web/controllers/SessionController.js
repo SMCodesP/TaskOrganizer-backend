@@ -15,10 +15,7 @@ class AuthController {
 			username
 		}).first()
 
-		console.log(user)
-
 		if (!user) {
-			console.log('Não existe')
 
 			bcrypt.genSalt(12, (err, salt) => {
 				bcrypt.hash(password, salt, async (err, hash) => {
@@ -38,9 +35,7 @@ class AuthController {
 						})
 					} catch (error) {
 						console.log(error)
-						return res.status(500).json({
-							error,
-						})
+						return res.status(500).send(error)
 					}
 				});
 			});
@@ -56,13 +51,7 @@ class AuthController {
 						user_id: user.id
 					})
 				} else {
-					res.status(401).json({
-						data: {
-							error: true,
-							signed: false,
-							message: 'Senha digitada incorreta.'
-						}
-					})
+					res.status(401).send('Senha digitada incorreta.')
 				}
 			});
 		}
