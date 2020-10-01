@@ -3,16 +3,19 @@
 module.exports = {
 
   development: {
-    client: 'sqlite3',
+    client: 'mysql',
     connection: {
-      filename: './dev.sqlite3'
+      host : '127.0.0.1',
+      user : 'root',
+      password : '',
+      database : 'task_organizer'
     },
-	migrations: {
-		directory: `${__dirname}/src/database/migrations`
-	},
-	seeds: {
-		directory: `${__dirname}/src/database/seeds`
-	}
+  	migrations: {
+  		directory: `${__dirname}/src/database/migrations`
+  	},
+  	seeds: {
+  		directory: `${__dirname}/src/database/seeds`
+  	}
   },
 
   staging: {
