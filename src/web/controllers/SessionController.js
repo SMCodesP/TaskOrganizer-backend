@@ -20,18 +20,23 @@ class AuthController {
 			bcrypt.genSalt(12, (err, salt) => {
 				bcrypt.hash(password, salt, async (err, hash) => {
 					try {
-						const response = await knex('user').insert({
+						const mount_user = {
 							username,
-							password: hash,
 							avatar_url: 'https://smcodes.tk/favicon.jpg'
+						}
+						const response = await knex('user').insert({
+							...mount_user,
+							password: hash,
 						})
 						const token = generateToken({
 							user_id: response[0]
 						})
 
+						mount_user.id = response[0]
+
 						return res.json({
 							token,
-							user_id: response[0]
+							user: mount_user
 						})
 					} catch (error) {
 						console.log(error)
@@ -46,9 +51,11 @@ class AuthController {
 						user_id: user.id
 					})
 
+					delete user.password
+
 					res.json({
 						token,
-						user_id: user.id
+						user,
 					})
 				} else {
 					res.status(401).send('Senha digitada incorreta.')
