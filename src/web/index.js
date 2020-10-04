@@ -13,6 +13,7 @@ class Web {
 	}
 
 	routes() {
+		this.app.use('/images', express.static('../../public/images/'));
 		this.app.use(routes)
 	}
 
