@@ -38,7 +38,9 @@ class UserController {
 				id: user_id
 			})
 
-			res.status(201).send()
+			res.status(200).json({
+				avatar_url: process.env.BASE_URL + '/images/' + req.file.filename
+			})
 		} catch (error) {
 			console.log(error)
 			res.status(500).json({

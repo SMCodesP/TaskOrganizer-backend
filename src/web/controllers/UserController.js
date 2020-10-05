@@ -22,7 +22,7 @@ class UserController {
 					try {
 						const mount_user = {
 							username,
-							avatar_url: 'https://smcodes.tk/favicon.jpg'
+							avatar_url: 'https://tasks-organizer.herokuapp.com/images/default.png'
 						}
 						await knex('user').insert({
 							...mount_user,
