@@ -16,7 +16,6 @@ router.put('/task/:id', celebrate({
 	[Segments.QUERY]: Joi.object().keys({
 		status: Joi.boolean().required()
 	}).messages({
-		'any.type': 'A',
 		'any.required': 'Você deve obrigatóriamente enviar o {#key} da task.'
 	})
 }), auth, TaskController.update)

@@ -49,7 +49,37 @@ class TaskController {
 
 			task.completed = status
 
-			res.json({task})
+			let rewarded;
+
+			if (status) {
+				if (new Date().valueOf() < task.due_timestamp) {
+					rewarded = process.env.REWARD_POINT || 15
+					await knex('user')
+						.where({
+							id: user_id
+						})
+						.increment('points', process.env.REWARD_POINT || 15)
+				} else {
+					rewarded = process.env.REWARD_REMOVE_POINT || 10
+					await knex('user')
+						.where({
+							id: user_id
+						})
+						.increment('points', process.env.REWARD_REMOVE_POINT || 10)
+				}
+			} else {
+				rewarded = -process.env.REWARD_REMOVE_POINT || -10
+				await knex('user')
+					.where({
+						id: user_id
+					})
+					.decrement('points', process.env.REWARD_REMOVE_POINT || 10)
+			}
+
+			res.json({
+				task,
+				rewarded
+			})
 		} catch (err) {
 			console.log(err)
 			res.status(500).json({

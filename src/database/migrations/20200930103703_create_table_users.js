@@ -5,6 +5,7 @@ exports.up = async (knex) => {
 		table.string('username', 64).unique().notNullable()
 		table.string('password').notNullable()
 		table.string('avatar_url').notNullable()
+		table.integer('points').default(0).notNullable()
 
 		table.timestamp('created_at').defaultTo(knex.fn.now())
 		table.timestamp('updated_at').defaultTo(knex.fn.now())
