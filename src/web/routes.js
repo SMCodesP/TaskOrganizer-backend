@@ -12,6 +12,15 @@ import upload from './middlewares/upload'
 
 const router = Router()
 
+router.put('/task/:id', celebrate({
+	[Segments.QUERY]: Joi.object().keys({
+		status: Joi.boolean().required()
+	}).messages({
+		'any.type': 'A',
+		'any.required': 'Você deve obrigatóriamente enviar o {#key} da task.'
+	})
+}), auth, TaskController.update)
+
 router.post('/user', celebrate({
 	[Segments.BODY]: Joi.object().keys({
 		username: Joi.string().required(),

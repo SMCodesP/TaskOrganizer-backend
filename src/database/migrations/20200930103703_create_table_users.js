@@ -15,6 +15,7 @@ exports.up = async (knex) => {
 		table.string('matter_title').notNullable()
 		table.string('task_title').notNullable()
 		table.text('description').notNullable()
+		table.boolean('completed').default(false)
 		table.timestamp('due_timestamp').notNullable()
 
 		table.timestamp('created_at').defaultTo(knex.fn.now())
