@@ -21,5 +21,6 @@ const fileFilter = (req, file, cb) => {
 		cb(null, false);
 	}
 }
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
-export default multer({ storage: storage, fileFilter: fileFilter });
+export default upload

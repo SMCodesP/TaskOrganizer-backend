@@ -1,6 +1,5 @@
 import {Router} from 'express'
-import multer from 'multer'
-import { celebrate, Joi, errors, Segments } from 'celebrate'
+import { celebrate, Joi, Segments } from 'celebrate'
 
 import UserController from './controllers/UserController'
 import SessionController from './controllers/SessionController'
@@ -10,9 +9,17 @@ import TasksController from './controllers/TasksController'
 import auth from './middlewares/auth'
 
 const router = Router()
-const upload = multer()
 
-router.post('/user', upload.single('avatar_img'), UserController.store)
+router.post('/user', celebrate({
+	[Segments.BODY]: Joi.object().keys({
+		username: Joi.string().required(),
+		password: Joi.string().min(6).required(),
+		confirm_password: Joi.valid(Joi.ref('password')),
+	}).messages({
+		'any.min': `Sua {#key} deve conter no mínimo {#limit} caractéres.`,
+		'any.required': `Você deve obrigatóriamente enviar seu {#key}.`
+	})
+}), UserController.store)
 
 router.post('/session', SessionController.store)
 

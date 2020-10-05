@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import { errors } from 'celebrate'
 
 import routes from './routes'
 
@@ -15,6 +16,7 @@ class Web {
 	routes() {
 		this.app.use('/images', express.static('../../public/images/'));
 		this.app.use(routes)
+		this.app.use(errors())
 	}
 
 	config() {
