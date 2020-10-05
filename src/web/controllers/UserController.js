@@ -24,15 +24,18 @@ class UserController {
 							username,
 							avatar_url: 'https://smcodes.tk/favicon.jpg'
 						}
-						const response = await knex('user').insert({
+						await knex('user').insert({
 							...mount_user,
 							password: hash,
 						})
+						const response = await knex('user').where({
+							username,
+						}).first()
 						const token = generateToken({
-							user_id: response[0]
+							user_id: response.id
 						})
 
-						mount_user.id = response[0]
+						mount_user.id = response.id
 
 						return res.json({
 							token,

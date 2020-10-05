@@ -6,7 +6,7 @@ class UserController {
 		try {
 			if (!req.file)
 				return res.status(400).json({
-					"statusCode": 401,
+					"statusCode": 400,
 					"validation": {
 						"body": {
 							"message": "Nenhum arquivo enviado."
