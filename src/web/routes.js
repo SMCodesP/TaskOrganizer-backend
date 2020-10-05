@@ -5,8 +5,10 @@ import UserController from './controllers/UserController'
 import SessionController from './controllers/SessionController'
 import TaskController from './controllers/TaskController'
 import TasksController from './controllers/TasksController'
+import AvatarController from './controllers/AvatarController'
 
 import auth from './middlewares/auth'
+import upload from './middlewares/upload'
 
 const router = Router()
 
@@ -20,6 +22,8 @@ router.post('/user', celebrate({
 		'any.required': `Você deve obrigatóriamente enviar seu {#key}.`
 	})
 }), UserController.store)
+
+router.put('/avatar', auth, upload.single('avatar_img'), AvatarController.update)
 
 router.post('/session', SessionController.store)
 

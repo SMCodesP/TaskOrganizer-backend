@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import { errors } from 'celebrate'
+import { resolve } from 'path'
 
 import routes from './routes'
 
@@ -14,7 +15,7 @@ class Web {
 	}
 
 	routes() {
-		this.app.use('/images', express.static('../../public/images/'));
+		this.app.use('/images', express.static(resolve(__dirname, '..', '..', 'public', 'images')));
 		this.app.use(routes)
 		this.app.use(errors())
 	}
