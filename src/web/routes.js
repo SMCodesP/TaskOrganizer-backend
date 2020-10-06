@@ -6,6 +6,7 @@ import SessionController from './controllers/SessionController'
 import TaskController from './controllers/TaskController'
 import TasksController from './controllers/TasksController'
 import AvatarController from './controllers/AvatarController'
+import PodiumController from './controllers/PodiumController'
 
 import auth from './middlewares/auth'
 import upload from './middlewares/upload'
@@ -35,6 +36,8 @@ router.post('/user', celebrate({
 
 
 router.get('/user', auth, UserController.index)
+
+router.get('/podium', PodiumController.index)
 
 router.put('/avatar', auth, upload.single('avatar_img'), AvatarController.update)
 
