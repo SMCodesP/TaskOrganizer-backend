@@ -12,6 +12,8 @@ import upload from './middlewares/upload'
 
 const router = Router()
 
+router.get('/', (req, res) => res.send('Ok'))
+
 router.put('/task/:id', celebrate({
 	[Segments.QUERY]: Joi.object().keys({
 		status: Joi.boolean().required()
