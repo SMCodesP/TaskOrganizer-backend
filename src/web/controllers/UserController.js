@@ -59,6 +59,30 @@ class UserController {
 		}
 	}
 
+	static async index(req, res) {
+		const {
+			user_id
+		} = req.user
+
+		const user = await knex('user').where({
+			id: user_id
+		}).first()
+
+		if (!user)
+			return res.status(404).json({
+				"statusCode": 404,
+				"validation": {
+					"body": {
+						"message": "O usuário logado não existe."
+					}
+				}
+			})
+
+		delete user.password;
+
+		res.json(user)
+	}
+
 }
 
 export default UserController

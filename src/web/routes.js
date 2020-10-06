@@ -33,6 +33,9 @@ router.post('/user', celebrate({
 	})
 }), UserController.store)
 
+
+router.get('/user', auth, UserController.index)
+
 router.put('/avatar', auth, upload.single('avatar_img'), AvatarController.update)
 
 router.post('/session', SessionController.store)

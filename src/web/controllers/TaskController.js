@@ -53,27 +53,27 @@ class TaskController {
 
 			if (status) {
 				if (new Date().valueOf() < task.due_timestamp) {
-					rewarded = process.env.REWARD_POINT || 15
+					rewarded = Number(process.env.REWARD_POINT || 15)
 					await knex('user')
 						.where({
 							id: user_id
 						})
-						.increment('points', process.env.REWARD_POINT || 15)
+						.increment('points', rewarded)
 				} else {
-					rewarded = process.env.REWARD_REMOVE_POINT || 10
+					rewarded = Number(process.env.REWARD_REMOVE_POINT || 10)
 					await knex('user')
 						.where({
 							id: user_id
 						})
-						.increment('points', process.env.REWARD_REMOVE_POINT || 10)
+						.increment('points', rewarded)
 				}
 			} else {
-				rewarded = -process.env.REWARD_REMOVE_POINT || -10
+				rewarded = Number(-process.env.REWARD_REMOVE_POINT || -10)
 				await knex('user')
 					.where({
 						id: user_id
 					})
-					.decrement('points', process.env.REWARD_REMOVE_POINT || 10)
+					.decrement('points', Number(process.env.REWARD_REMOVE_POINT || 10))
 			}
 
 			res.json({
