@@ -1,5 +1,6 @@
 import {Router} from 'express'
-import { celebrate, Joi, Segments } from 'celebrate'
+import {celebrate, Joi, Segments} from 'celebrate'
+import rateLimit from 'express-rate-limit'
 
 import UserController from './controllers/UserController'
 import SessionController from './controllers/SessionController'
@@ -13,6 +14,20 @@ import upload from './middlewares/upload'
 
 const router = Router()
 
+const apiLimiter = rateLimit({
+	windowMs: 5 * 60 * 1000, // 15 minutes
+	max: 50,
+	message: "Você antigiu o máximo de request por 5 minutos, por favor espere 5 minutos."
+});
+
+const accountLimiter = rateLimit({
+	windowMs: 24 * (60 * (60 * 1000)), // 15 minutes
+	max: 1,
+	message: "Você atingiu o máximo de contas por IP."
+});
+
+router.use(apiLimiter)
+
 router.get('/', (req, res) => res.send('Ok'))
 
 router.put('/task/:id', celebrate({
@@ -23,7 +38,7 @@ router.put('/task/:id', celebrate({
 	})
 }), auth, TaskController.update)
 
-router.post('/user', celebrate({
+router.post('/user', accountLimiter, celebrate({
 	[Segments.BODY]: Joi.object().keys({
 		username: Joi.string().required(),
 		password: Joi.string().min(6).required(),
