@@ -4,7 +4,7 @@ module.exports = {
 
   development: {
     client: 'pg',
-	connection: 'postgres://bwvbvkiewuoilm:4cc79d968881fffe1dfb8839794b3ba628e4398c11488e4bc0e938423b6cbe6c@ec2-34-232-212-164.compute-1.amazonaws.com:5432/d7n59ap9dugfbl?ssl=true',
+    connection: 'postgres://qxjhzwicjigocn:d662cec981ed6ea15451afc398b3081d51f1e9b54d593b86830b7b9af5d3a11a@ec2-54-157-4-216.compute-1.amazonaws.com:5432/dia97ik0ukvvq?ssl=true',
   	migrations: {
   		directory: `${__dirname}/src/database/migrations`
   	},
