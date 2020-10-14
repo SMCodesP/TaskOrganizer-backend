@@ -114,15 +114,17 @@ class TaskController {
 
 		try {
 
-			await knex('task').insert({
+			const response = await knex('task').insert({
 				matter_title,
 				task_title,
 				description,
 				due_timestamp: moment(due_timestamp).format('YYYY-MM-DD HH:mm:ss'),
 				user_id,
-			})
+			}).returning('*')
 
-			return res.status(201).send()
+			console.log(response[0])
+
+			return res.status(200).json(response[0])
 		} catch (error) {
 			console.log(error)
 			return res.status(500).send(error)
